@@ -5,6 +5,8 @@
 User loginUser = (User)session.getAttribute("loginUser");
 
 List<Movie> movieList = (List<Movie>)application.getAttribute("movieList");
+
+String errorMsg = (String)request.getAttribute("errorMsg");
 %>
 
 <!DOCTYPE html>
@@ -22,5 +24,19 @@ List<Movie> movieList = (List<Movie>)application.getAttribute("movieList");
 	<p>一言：<textarea name="comment"></textarea></p>
 	<input type="submit" value="送信">
 </form>
+<% if (errorMsg != null){ %>
+<p><%=errorMsg %></p>
+<%} %>
+<table border="1">
+<% if (movieList.size() > 0) { %>
+	<% for (Movie movie : movieList) { %>
+		<tr>
+			<td><%= movie.getName() %></td>
+			<td><%= movie.getTitle() %></td>
+			<td><%= movie.getComment() %></td>
+		</tr>
+	<% } %>
+<% } %>
+</table>
 </body>
 </html>

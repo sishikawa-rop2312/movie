@@ -10,20 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.LoginLogic;
-import model.User;
-
 /**
- * Servlet implementation class Login
+ * Servlet implementation class Logout
  */
-@WebServlet("/Login")
-public class Login extends HttpServlet {
+@WebServlet("/Logout")
+public class Logout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Login() {
+    public Logout() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,34 +28,20 @@ public class Login extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// フォワード
-		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+		HttpSession session = request.getSession();
+		session.invalidate();
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/logout.jsp");
 		dispatcher.forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-
-		String name = request.getParameter("name");
-		String password = request.getParameter("password");
-
-		User user = new User(name, password);
-
-		LoginLogic loginLogic = new LoginLogic();
-		boolean isLogin = loginLogic.login(user);
-		if (isLogin) {
-			HttpSession session = request.getSession();
-			session.setAttribute("loginUser", user);
-		}
-
-		// フォワード
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/loginResult.jsp");
-		dispatcher.forward(request, response);
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
+
 }
